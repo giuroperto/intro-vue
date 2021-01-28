@@ -13,11 +13,28 @@ var app = new Vue({
       {
         variantId: 2234,
         variantColour: "green",
+        variantImage: "./assets/vmSocks-green-onWhite.jpg",
       }, {
         variantId: 2235,
         variantColour: "blue",
+        variantImage: "./assets/vmSocks-blue-onWhite.jpg",
       }
     ],
     sizes: ["P", "M", "G"],
+    cart: 0,
+  },
+  methods: {
+    addToCart: function () {
+      this.cart += 1;
+    },
+    //we can use the shorthand to the named function but be aware that not all browsers support the feature
+    updateProduct(variantImage) {
+      this.image = variantImage;
+    },
+    removeFromCart() {
+      if(this.cart >= 1) {
+        this.cart -= 1;
+      }
+    }
   }
 });
