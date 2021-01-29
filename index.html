@@ -1,65 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product App</title>
   <link rel="stylesheet" href="style.css" type="text/css">
 </head>
+
 <body>
 
   <div class="nav-bar"></div>
 
   <div id="app">
-    <div class="product">
-      <div class="product-image">
-        <a :href="link" target="_blank">
-          <img :src="image" alt="">
-        </a>
-      </div>
-
-      <div class="product-info">
-        <h1>{{ title }}</h1>
-        <p>{{ description }}</p>
-        <p>{{ onSale }}</p>
-        <!-- <p v-show="inStock">In Stock</p> -->
-        <!-- <p v-if="onSale">ON SALE!</p> -->
-        <p v-if="inStock">In Stock</p>
-        <p v-else>Out of Stock</p>
-        <ul>
-          <li v-for="detail in details"> {{detail}} </li>
-        </ul>
-
-        <div v-for="(variant, idx) in variants" :key="variant.variantId"
-        class="color-box"
-        :style="{ backgroundColor: variant.variantColour} "
-        @mouseover="updateProduct(idx)">
-        </div>
-        
-        <div> SIZES:
-          <ul>
-            <li v-for="size in sizes">
-              {{ size }}
-            </li>
-          </ul>
-        </div>
-
-        <button v-on:click="addToCart"
-          :disabled="!inStock"
-          :class="{ disabledButton: !inStock}"
-          >Add to Cart</button>
-
-        <button v-on:click="removeFromCart">Remove from Cart</button>
-
-        <div class="cart">
-          <p>Cart({{cart}})</p>
-        </div>
-        <!-- <p v-if="inventory > 10">In Stock</p>
-        <p v-else-if="inventory <= 10 && inventory > 0"> Almost Sold Out!</p>
-        <p v-else
-          :class="{classLineThrough: !inStock}">Out of Stock</p> -->
-      </>
-    </div>
+    <product :premium="premium"></product>
+    <product></product>
+    <product></product>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
@@ -72,7 +28,7 @@
         message: 'Hello Vue!'
       }
     });</script> -->
-  
+
   <!-- development version, includes helpful console warnings -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js">
     const app = new Vue({
@@ -84,4 +40,5 @@
   </script> -->
 
 </body>
+
 </html>
