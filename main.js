@@ -1,23 +1,27 @@
 var app = new Vue({
   el: '#app',
   data: {
+    brand: 'Vue Mastery',
     product: 'Boots',
     description: 'These boots are made for walking, and walking is what they do... one of these days these boots are gonna walk all over you.',
-    image: './assets/vmSocks-green-onWhite.jpg',
+    selectedVariant: 0,
     link: 'https://nocoldfeet.co/collections/green-socks',
-    inStock: false,
     inventory: 5,
-    onSale: true,
+    // onSale: true,
     details: ["80% cotton", "20% polyester", "Gender-neutral"],
     variants: [
       {
         variantId: 2234,
         variantColour: "green",
         variantImage: "./assets/vmSocks-green-onWhite.jpg",
+        variantQuantity: 10,
+        onSale: true,
       }, {
         variantId: 2235,
         variantColour: "blue",
         variantImage: "./assets/vmSocks-blue-onWhite.jpg",
+        variantQuantity: 0,
+        onSale: false,
       }
     ],
     sizes: ["P", "M", "G"],
@@ -28,13 +32,28 @@ var app = new Vue({
       this.cart += 1;
     },
     //we can use the shorthand to the named function but be aware that not all browsers support the feature
-    updateProduct(variantImage) {
-      this.image = variantImage;
+    updateProduct(index) {
+      this.selectedVariant = index;
+      // console.log(index);
     },
     removeFromCart() {
       if(this.cart >= 1) {
         this.cart -= 1;
       }
+    }
+  },
+  computed: {
+    title() {
+      return this.brand + ' ' + this.product;
+    },
+    image() {
+      return this.variants[this.selectedVariant].variantImage;
+    },
+    inStock() {
+      return this.variants[this.selectedVariant].variantQuantity;
+    },
+    onSale() {
+      return this.variants[this.selectedVariant].onSale ? this.brand + ' ' + this.product + ' is on sale' : this.brand + ' ' + this.product + ' is not on sale';
     }
   }
 });
