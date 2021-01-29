@@ -47,9 +47,6 @@ Vue.component('product', {
 
     <button v-on:click="removeFromCart">Remove from Cart</button>
 
-    <div class="cart">
-      <p>Cart({{cart}})</p>
-    </div>
     <!-- <p v-if="inventory > 10">In Stock</p>
     <p v-else-if="inventory <= 10 && inventory > 0"> Almost Sold Out!</p>
     <p v-else
@@ -80,12 +77,11 @@ Vue.component('product', {
         onSale: false,
       }],
       sizes: ["P", "M", "G"],
-      cart: 0,
     };
   },
   methods: {
     addToCart: function () {
-      this.cart += 1;
+      this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
     },
     //we can use the shorthand to the named function but be aware that not all browsers support the feature
     updateProduct(index) {
@@ -93,9 +89,7 @@ Vue.component('product', {
       // console.log(index);
     },
     removeFromCart() {
-      if (this.cart >= 1) {
-        this.cart -= 1;
-      }
+      this.$emit('remove-from-cart', this.variants[this.selectedVariant].variantId);
     }
   },
   computed: {
@@ -138,5 +132,26 @@ var app = new Vue({
   el: '#app',
   data: {
     premium: true,
+    cart: [],
+  },
+  methods: {
+    updateCart(id) {
+      this.cart.push(id);
+    },
+    removeProduct(id) {
+      let iPos;
+      if (this.cart.length >= 1) {
+        iPos = this.cart.indexOf(id);
+        this.cart.splice(iPos, 1);
+      }
+    },
+    //another way of writing this function is the following - starts at the end of the array - mine would work fine in this example too because as we are considering the id it doesn't matter much when you added it to the cart considering you do remove it.
+    // removeItem(id) {
+    //   for (let i = this.cart.length - 1; i >=0; i--) {
+    //     if (this.cart[i] === id) {
+    //       this.cart.splice(i, 1);
+    //     }
+    //   }
+    // }
   }
 });
