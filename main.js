@@ -60,6 +60,7 @@ Vue.component('product', {
           <p>{{ areview.name }}</p>
           <p>{{ areview.review }}</p>
           <p>Rating: {{ areview.rating }}</p>
+          <p>Recommendation: {{ areview.recommendation }}</p>
       </ul>
     </div>
 
@@ -176,6 +177,18 @@ Vue.component('product-review', {
         <option>1</option>
       </select>
     </p>
+
+    <p>
+      <div class="d-flex-h">
+        <label for="recommendation">Would you recommend this product?</label> 
+        <input type="radio" id="yes" name="recommendation" value="yes" v-model="recommendation">
+        <label for="yes">Yes</label><br>
+        <input type="radio" id="maybe" name="recommendation" value="maybe" v-model="recommendation">
+        <label for="maybe">Maybe</label><br>
+        <input type="radio" id="no" name="recommendation" value="no" v-model="recommendation">
+        <label for="no">No</label><br>
+      </div>
+    </p>
         
     <p>
       <input type="submit" value="Submit">  
@@ -188,27 +201,32 @@ Vue.component('product-review', {
       name: null,
       review: null,
       rating: null,
+      recommendation: null,
       errors: [],
     };
   },
   methods: {
     onSubmit() {
-      if (this.name && this.review && this.rating) {
+      if (this.name && this.review && this.rating  && this.recommendation) {
         let productReview = {
           name: this.name,
           review: this.review,
           rating: this.rating,
+          recommendation: this.recommendation,
         };
-  
+        
         this.$emit('review-submitted', productReview);
-  
+        
         this.name = null;
         this.review = null;
         this.rating = null;
+        this.recommendation = null;
+
       } else {
         if (!this.name) this.errors.push("Name required.");
         if (!this.review) this.errors.push("Review required.");
         if (!this.rating) this.errors.push("Rating required.");
+        if (!this.recommendation) this.errors.push("Recommendation required.");
       }
     }
   }

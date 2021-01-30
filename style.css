@@ -91,3 +91,8 @@ textarea {
 .classLineThrough {
   text-decoration: line-through;
 }
+
+.d-flex-h {
+  display: flex;
+  align-items: center;
+}
